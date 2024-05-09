@@ -17,10 +17,10 @@ def echo():
 
 @app.route('/call', methods=['POST'])
 def call_handler():
-    if 'validationUrl' in request.json:
+    if request.json[0] and 'validationUrl' in request.json[0]:
         print("\n\n------------------------------Validation Request------------------------------")
         print("Making request to validate...")
-        response = requests.get(request.json['validationUrl'])
+        response = requests.get(request.json[0]['validationUrl'])
         print("Validation request received. Response:")
         print(response.text)
         print("")
