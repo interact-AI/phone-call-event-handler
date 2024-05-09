@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import os
+import requests
 
 app = Flask(__name__)
 
@@ -16,9 +17,27 @@ def echo():
 
 @app.route('/call', methods=['POST'])
 def call_handler():
+    # if the body contains validationUrl then mage a GET request to that URL
+    # and print: "Validation request received."
+    if 'validationUrl' in request.json:
+        print("\n\n------------------------------Validation Request------------------------------")
+        print("Making request to validate...")
+        response = requests.get(request.json['validationUrl'])
+        print("Validation request received. Response:")
+        print(response.text)
+        print("")
+        return jsonify({'validationUrlExitCode': response.status_code})
     print("\n\n------------------------------Called Received------------------------------")
     print(request.json)
     print("")
+    
+    return jsonify({'received': "OK"})
+
+    
+    
+    
+
+
     return jsonify({'received': "OK"})
 
 if __name__ == '__main__':
