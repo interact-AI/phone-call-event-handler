@@ -17,7 +17,7 @@ def echo():
 
 @app.route('/call', methods=['POST'])
 def call_handler():
-    if request.json[0] and 'validationUrl' in request.json[0]:
+    if isinstance(request.json, list) and 'validationUrl' in request.json[0]:
         print("\n\n------------------------------Validation Request------------------------------")
         print("Making request to validate...")
         response = requests.get(request.json[0]['validationUrl'])
