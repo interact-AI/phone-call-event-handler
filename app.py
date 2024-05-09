@@ -14,6 +14,13 @@ def echo():
     data = request.args.get('data')
     return jsonify({'data': data})
 
+@app.route('/call', methods=['POST'])
+def call_handler():
+    print("\n\n------------------------------Called Received------------------------------")
+    print(request.json)
+    print("")
+    return jsonify({'received': "OK"})
+
 if __name__ == '__main__':
     load_dotenv()
     port = int(os.getenv('PORT')) if 'PORT' in os.environ else 80
