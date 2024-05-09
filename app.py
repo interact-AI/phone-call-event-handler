@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 import os
 
 app = Flask(__name__)
