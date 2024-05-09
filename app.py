@@ -17,8 +17,6 @@ def echo():
 
 @app.route('/call', methods=['POST'])
 def call_handler():
-    # if the body contains validationUrl then mage a GET request to that URL
-    # and print: "Validation request received."
     if 'validationUrl' in request.json:
         print("\n\n------------------------------Validation Request------------------------------")
         print("Making request to validate...")
