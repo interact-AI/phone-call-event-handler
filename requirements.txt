@@ -2,4 +2,3 @@ flask
 gunicorn
 python-dotenv
 azure-communication-callautomation
-dotenv
