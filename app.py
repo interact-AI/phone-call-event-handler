@@ -38,6 +38,6 @@ def call_handler():
 
 
 load_dotenv()
-port = 80
+port = 8000
 print(f"Server running on port {port}")
 app.run(host='0.0.0.0', port=port)
