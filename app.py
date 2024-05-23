@@ -1,9 +1,7 @@
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
-import os
 from azure.communication.callautomation import (
-    CallAutomationClient,
-    CommunicationUserIdentifier
+    CallAutomationClient
 )
 from azure.communication.callautomation import FileSource
 
@@ -40,6 +38,6 @@ def call_handler():
 
 
 load_dotenv()
-port = int(os.getenv('PORT')) if 'PORT' in os.environ else 80
+port = 5000
 print(f"Server running on port {port}")
 app.run(host='0.0.0.0', port=port)
