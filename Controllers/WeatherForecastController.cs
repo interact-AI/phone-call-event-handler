@@ -26,7 +26,7 @@ namespace call_handler.Controllers
             Console.WriteLine(request);
             Console.WriteLine("\n\n\n\n");
             Console.WriteLine(request[0]);
-            var callContext = JsonSerializer.Deserialize<dynamic>(request[0]).data.incomingCallContext;
+            var callContext = JsonSerializer.Deserialize<Object>(request[0]).data.incomingCallContext;
             var client = new CallAutomationClient(endpoint, tokenCredential);
             Response<AnswerCallResult> result = client.AnswerCall(callContext, callbackUri);
             var callId = result.Value.CallConnection.CallConnectionId;
