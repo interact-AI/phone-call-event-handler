@@ -1,11 +1,8 @@
 using Azure.Communication.CallAutomation;
-using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
-using Azure.Identity;
 using Azure;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+
 
 namespace call_handler.Controllers
 {
@@ -48,7 +45,7 @@ namespace call_handler.Controllers
             var audioFileUri = new Uri(audioFileUrl);
             var audioFile = new FileSource(audioFileUri);
             Console.WriteLine("Esperando a conexion...");
-            await Task.Delay(3000);
+            await Task.Delay(2000);
             Console.WriteLine("Va el audio");
             callConnection.GetCallMedia().PlayToAll(audioFile);
             Console.WriteLine("End call");
