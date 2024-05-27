@@ -1,12 +1,27 @@
 using Azure.Communication.CallAutomation;
 using Azure.Core;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using Azure.Identity;
 using Azure;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace call_handler.Controllers
 {
+    class ResponseWrapperWrapper
+    {
+        public string incomingCallContext { get; set; }
+
+        public static ResponseWrapperWrapper FromJson(string json) => JsonConvert.DeserializeObject<ResponseWrapperWrapper>(json);
+
+    }
+    class ResponseWrapper
+    {
+        public ResponseWrapperWrapper data { get; set; }
+
+        public static ResponseWrapper FromJson(string json) => JsonConvert.DeserializeObject<ResponseWrapper>(json);    
+    }   
     [ApiController]
     [Route("call")]
     public class WeatherForecastController : ControllerBase
@@ -26,7 +41,9 @@ namespace call_handler.Controllers
             Console.WriteLine(request);
             Console.WriteLine("\n\n\n\n");
             Console.WriteLine(request[0]);
-            var callContext = JsonSerializer.Deserialize<Object>(request[0]).data.incomingCallContext;
+            string requestString = request[0].ToString();
+            ResponseWrapper callContextJson = ResponseWrapper.FromJson(requestString);
+            var callContext = callContextJson.data.incomingCallContext;
             var client = new CallAutomationClient(endpoint, tokenCredential);
             Response<AnswerCallResult> result = client.AnswerCall(callContext, callbackUri);
             var callId = result.Value.CallConnection.CallConnectionId;

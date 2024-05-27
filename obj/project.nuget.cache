@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "gE0phA5R1vw1Llk7A/3GJbRjQQ6ZtJ1/I94tEtf+ufBY70aE7kNp0bCTHL6PCeu54OVwzL/5Sbs71UMWCjad1Q==",
+  "dgSpecHash": "IOqh5YDX7O4STScCZhPzA6egki3RY093pYGk63lHaQWb3UeTapFsq9/IzPixjF7ocRrr+/CYVLbCZN2527mhsQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\barra\\source\\repos\\call-handler\\call-handler.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,7 @@
     "C:\\Users\\barra\\.nuget\\packages\\microsoft.identity.client.extensions.msal\\4.60.3\\microsoft.identity.client.extensions.msal.4.60.3.nupkg.sha512",
     "C:\\Users\\barra\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.35.0\\microsoft.identitymodel.abstractions.6.35.0.nupkg.sha512",
     "C:\\Users\\barra\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\barra\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\barra\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
     "C:\\Users\\barra\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
     "C:\\Users\\barra\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
