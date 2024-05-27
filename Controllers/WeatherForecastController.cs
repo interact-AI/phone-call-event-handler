@@ -36,15 +36,14 @@ namespace call_handler.Controllers
             Console.WriteLine("\n\n------------------------------Called Received------------------------------");
             var callbackUrl = "https://incomingcall-python-api.azurewebsites.net/call";
             var callbackUri = new Uri(callbackUrl);
-            var endpoint = new Uri("https://voicecallresource.brazil.communication.azure.com/;accesskey=Es26fVjrw3z3vGBQq0lqo4HDlH9QwMqie4mIv2v2VHaKBFzoaXaeM2ljhk68PIqtuB+hl4J2r9GEravehdJGvw==");
-            TokenCredential tokenCredential = new DefaultAzureCredential();
+            var endpoint = ("endpoint=https://voicecallresource.brazil.communication.azure.com/;accesskey=Es26fVjrw3z3vGBQq0lqo4HDlH9QwMqie4mIv2v2VHaKBFzoaXaeM2ljhk68PIqtuB+hl4J2r9GEravehdJGvw==");
             Console.WriteLine(request);
             Console.WriteLine("\n\n\n\n");
             Console.WriteLine(request[0]);
             string requestString = request[0].ToString();
             ResponseWrapper callContextJson = ResponseWrapper.FromJson(requestString);
             var callContext = callContextJson.data.incomingCallContext;
-            var client = new CallAutomationClient(endpoint, tokenCredential);
+            var client = new CallAutomationClient(endpoint);
             Response<AnswerCallResult> result = client.AnswerCall(callContext, callbackUri);
             var callId = result.Value.CallConnection.CallConnectionId;
             CallConnection callConnection = client.GetCallConnection(callId); 
