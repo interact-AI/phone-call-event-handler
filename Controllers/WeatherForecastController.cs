@@ -23,6 +23,9 @@ namespace call_handler.Controllers
             var callbackUri = new Uri(callbackUrl);
             var endpoint = new Uri("https://voicecallresource.brazil.communication.azure.com/;accesskey=Es26fVjrw3z3vGBQq0lqo4HDlH9QwMqie4mIv2v2VHaKBFzoaXaeM2ljhk68PIqtuB+hl4J2r9GEravehdJGvw==");
             TokenCredential tokenCredential = new DefaultAzureCredential();
+            Console.WriteLine(request);
+            Console.WriteLine("\n\n\n\n");
+            Console.WriteLine(request[0]);
             var callContext = request[0].data.incomingCallContext;
             var client = new CallAutomationClient(endpoint, tokenCredential);
             Response<AnswerCallResult> result = client.AnswerCall(callContext, callbackUri);
