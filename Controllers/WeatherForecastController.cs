@@ -44,7 +44,7 @@ namespace call_handler.Controllers
             var audioFileUrl = "https://interactaidata.blob.core.windows.net/test/ns2-st10-sca3-sec12.03.wav";
             var audioFileUri = new Uri(audioFileUrl);
             var audioFile = new FileSource(audioFileUri);
-            Console.WriteLine("Esperando a conexion...");
+            Console.WriteLine("Esperando 2 segundos a conexion...");
             await Task.Delay(2000);
             Console.WriteLine("Va el audio");
             callConnection.GetCallMedia().PlayToAll(audioFile);
