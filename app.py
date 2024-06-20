@@ -15,6 +15,11 @@ def echo():
     data = request.args.get('data')
     return jsonify({'data': data})
 
+@app.route('/data', methods=['POST'])
+def data():
+    data = request.json
+    return jsonify({'data': data})
+
 port = 80
 print(f"Server running on port {port}")
 
