@@ -1,5 +1,7 @@
 import os
 from aiohttp import web
+from http import HTTPStatus
+from aiohttp.web import Request, Response
 
 async def handle_pki_validation(request):
     file_path = './.well-known/pki-validation/38396ED348AFD2CCBC953C4F798FDBFF.txt'
@@ -21,7 +23,7 @@ async def postInfo(req: Request) -> Response:
 app = web.Application()
 app.router.add_get('/.well-known/pki-validation/38396ED348AFD2CCBC953C4F798FDBFF.txt', handle_pki_validation)
 app.router.add_get("/status", status)
-app.router.add_post("/info", messages)
+app.router.add_post("/info", postInfo)
 
 
 if __name__ == "__main__":
