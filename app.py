@@ -5,8 +5,10 @@ from aiohttp.web import Request, Response
 import ssl
 from azure.communication.callautomation import CallAutomationClient, FileSource
 import asyncio
+from dotenv import load_dotenv
 
 print("Creating call automation client...")
+load_dotenv()
 acs_conn_str = os.getenv("ACS_CONNECTION_STRING")
 call_automation_client = CallAutomationClient.from_connection_string(
     acs_conn_str)
