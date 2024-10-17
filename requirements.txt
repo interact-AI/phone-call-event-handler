@@ -1,2 +1,3 @@
 flask
-ssl
+azure-communication-callautomation
+asyncio

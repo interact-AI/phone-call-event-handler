@@ -3,6 +3,13 @@ from aiohttp import web
 from http import HTTPStatus
 from aiohttp.web import Request, Response
 import ssl
+from azure.communication.callautomation import CallAutomationClient, FileSource
+import asyncio
+
+print("Creating call automation client...")
+acs_conn_str = os.getenv("ACS_CONNECTION_STRING")
+call_automation_client = CallAutomationClient.from_connection_string(
+    acs_conn_str)
 
 
 async def handle_pki_validation(request):
@@ -22,6 +29,23 @@ async def postInfo(req: Request) -> Response:
     print("Received info")
     body = await req.json()
     print(body)
+    print("Answering call...")
+    incoming_call_context = body["data"]["incomingCallContext"]
+    print(incoming_call_context)
+    call_connection_properties = call_automation_client.answer_call(
+        incoming_call_context=incoming_call_context, callback_url="https://www.google.com"
+    )
+    print("Getting audio file...")
+    my_file = FileSource(url="./buenas.mp3")
+    print("Getting call connection...")
+    call_connection = call_automation_client.get_call_connection(
+        call_connection_id=call_connection_properties.call_connection_id)
+    print("Playing media...")
+    call_connection.play_media_to_all(my_file)
+    print("Waiting for 5 seconds...")
+    await asyncio.sleep(5)
+    print("Hanging up...")
+    call_connection.hang_up(is_for_everyone=True)
     return Response(status=HTTPStatus.OK)
 
 app = web.Application()
