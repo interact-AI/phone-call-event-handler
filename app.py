@@ -15,7 +15,7 @@ call_automation_client = CallAutomationClient.from_connection_string(
 
 
 async def handle_pki_validation(request):
-    file_path = './.well-known/pki-validation/D9C5AF9351D746285DD8204D9966211D.txt'
+    file_path = './.well-known/pki-validation/BDD3B7F42D29EB9BE715EE3E1CF6C922.txt'
     if os.path.exists(file_path):
         return web.FileResponse(file_path)
     else:
@@ -28,33 +28,52 @@ async def status(req: Request) -> Response:
 
 
 async def postInfo(req: Request) -> Response:
-    print("Received info")
+    print("\nReceived info")
     body = await req.json()
-    print(body)
     print("Answering call...")
-    incoming_call_context = body["data"]["incomingCallContext"]
-    print(incoming_call_context)
-    call_connection_properties = call_automation_client.answer_call(
-        incoming_call_context=incoming_call_context, callback_url="https://www.google.com"
-    )
-    print("Getting audio file...")
-    my_file = FileSource(url="./buenas.mp3")
-    print("Getting call connection...")
-    call_connection = call_automation_client.get_call_connection(
-        call_connection_id=call_connection_properties.call_connection_id)
-    print("Playing media...")
-    call_connection.play_media_to_all(my_file)
-    print("Waiting for 5 seconds...")
-    await asyncio.sleep(5)
-    print("Hanging up...")
-    call_connection.hang_up(is_for_everyone=True)
+    try:
+        incoming_call_context = body[0]["data"]["incomingCallContext"]
+        call_automation_client.answer_call(
+            incoming_call_context=incoming_call_context, callback_url="https://20.122.16.133:80/acs-callback"
+        )
+    except Exception as e:
+        print(e)
+        return Response(status=HTTPStatus.OK, text="Error answering call")
+    print("Call answered successfully")
+    return Response(status=HTTPStatus.OK)
+
+
+async def acs_callback(req: Request) -> Response:
+    body = await req.json()
+    body = body[0]
+    print("\nReceived ACS callback")
+    event_type = body['type']
+
+    if event_type == 'Microsoft.Communication.CallConnected':
+        call_connection_id = body['data']['callConnectionId']
+        print("Call connected.\nPlaying media...")
+
+        my_file = FileSource(
+            url="https://firebasestorage.googleapis.com/v0/b/stella-app-8ad37.appspot.com/o/buenas.mp3?alt=media&token=31cc6235-33fa-4f54-b691-06fb19306fc4"
+        )
+
+        call_connection = call_automation_client.get_call_connection(
+            call_connection_id)
+        try:
+            call_connection.play_media_to_all(my_file)
+            print("Media played successfully")
+        except Exception as e:
+            print(e)
+    else:
+        print(f"Event type {event_type} not supported\nExiting... ")
     return Response(status=HTTPStatus.OK)
 
 app = web.Application()
 app.router.add_get(
-    '/.well-known/pki-validation/D9C5AF9351D746285DD8204D9966211D.txt', handle_pki_validation)
+    '/.well-known/pki-validation/BDD3B7F42D29EB9BE715EE3E1CF6C922.txt', handle_pki_validation)
 app.router.add_get("/status", status)
 app.router.add_post("/info", postInfo)
+app.router.add_post("/acs-callback", acs_callback)
 
 if __name__ == "__main__":
     cert_path = './certificate.crt'
