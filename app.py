@@ -39,7 +39,7 @@ async def postInfo(req: Request) -> Response:
     except Exception as e:
         print(e)
         return Response(status=HTTPStatus.OK, text="Error answering call")
-    print("Call answered successfully")
+    print("Call answer request sent successfully")
     return Response(status=HTTPStatus.OK)
 
 
@@ -61,7 +61,7 @@ async def acs_callback(req: Request) -> Response:
             call_connection_id)
         try:
             call_connection.play_media_to_all(my_file)
-            print("Media played successfully")
+            print("Media started playing successfully")
         except Exception as e:
             print(e)
     else:
